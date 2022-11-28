@@ -1,0 +1,13 @@
+google-auth
+google-auth-oauthlib
+google-cloud-bigquery
+google-cloud-bigquery-storage
+google-cloud-storage
+pandas
+pandas-gbq
+prefect
+prefect-gcp
+psycopg2
+pydata-google-auth
+pygit2
+python-dotenv
