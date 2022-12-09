@@ -105,7 +105,7 @@ def parent(
             df = transform.with_options(name=f"transform_{file}").submit(
                 df.result(), file
             )
-            load.with_options(name=f"load_{file}").submit(
+            load.with_options(name=f"🤖load_{file}").submit(
                 df.result().head(100),
                 file,
                 tbl,
@@ -116,11 +116,12 @@ def parent(
             )
 
 
-@flow
-def yearly_flow(years: List[int] = [2019, 2020, 2021, 2022]):
+@flow(log_prints=True)
+def yearly_flow(service_type: str = "yellow", years: List[int] = [2019, 2020]):  #  , 2021, 2022]):
     for year in years:
-        parent(year=year)
+        print(f"Starting a flow run for the year: {year}")
+        parent.with_options(name=f"{service_type}-taxi-{year}")(year=year)
 
 
 if __name__ == "__main__":
-    parent()
+    yearly_flow()

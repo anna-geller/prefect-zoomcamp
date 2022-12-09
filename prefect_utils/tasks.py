@@ -1,9 +1,10 @@
 """
 Example file to download: https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2022-01.parquet
 """
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 from prefect import task, get_run_logger
+from prefect.tasks import task_input_hash
 from typing import List
 from urllib.error import HTTPError
 from urllib.request import urlopen
@@ -39,7 +40,7 @@ def extract(file_name: str) -> pd.DataFrame:
         logger.warning("File %s is not available in TLC Trip Record Data")
 
 
-@task
+@task(cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
 def transform(
     df: pd.DataFrame, file_name: str, service_type: str = "yellow"
 ) -> pd.DataFrame:
