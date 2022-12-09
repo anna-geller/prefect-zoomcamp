@@ -12,6 +12,7 @@ from prefect.task_runners import SequentialTaskRunner
 
 from prefect_utils import BigQueryPandas
 from prefect_utils.tasks import get_files_to_process, extract, transform
+from typing import List
 
 
 @task
@@ -113,6 +114,12 @@ def parent(
             update_pocessed_files.with_options(name=f"update_block_{file}").submit(
                 df.result(), file, tbl, service_type
             )
+
+
+@flow
+def yearly_flow(years: List[int] = [2019, 2020, 2021, 2022]):
+    for year in years:
+        parent(year=year)
 
 
 if __name__ == "__main__":
