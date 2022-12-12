@@ -1,13 +1,30 @@
 from prefect.filesystems import GitHub
-from prefect.infrastructure import KubernetesJob
+from prefect_gcp.cloud_run import CloudRunJob
+from prefect_gcp.credentials import GcpCredentials
+from prefect_utils import PostgresPandas, BigQueryPandas
 
-k8s = KubernetesJob(
-    image="prefecthq/prefect:2-python3.10",
-    namespace="prefect",
-    image_pull_policy="IfNotPresent",
-    env={"PREFECT_LOGGING_LEVEL": "INFO"},
+
+block = CloudRunJob(
+    image="us-east1-docker.pkg.dev/prefect-community/prefect/flows:latest",
+    region="us-east1",
+    credentials=GcpCredentials.load("default"),
+    cpu=1,
+    timeout=3600,
 )
-k8s.save("default", overwrite=True)
+block.save("default", overwrite=True)
 
-gh = GitHub(repository="https://github.com/anna-geller/prefect-zoomcamp", reference="main")
-gh.save("default", overwrite=True)
+
+gh = GitHub(
+    repository="https://github.com/anna-geller/prefect-zoomcamp", reference="main"
+)
+gh.save("prefect-zoomcamp", overwrite=True)
+
+
+postgres_block = PostgresPandas(user_name="postgres", password="postgres")
+postgres_block.save("default", overwrite=True)
+
+block = BigQueryPandas(
+    credentials=GcpCredentials.load("default"),
+    project="prefect-community",
+)
+block.save("default", overwrite=True)

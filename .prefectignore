@@ -138,8 +138,8 @@ dmypy.json
 # Editors
 .idea/
 .vscode/
-.idea/
 .tmp/
+*-deployment.yaml
 .github/
 blocks/
 deploy/
@@ -155,7 +155,6 @@ setup.py
 task-definition.json
 *.md
 *.txt
-*-deployment.yaml
 *.bash
 *.log
 dbt_*/etc/

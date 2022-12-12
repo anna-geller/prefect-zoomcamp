@@ -36,7 +36,7 @@ def parent_ingestion_postgres_taxi_data(
         df = transform.with_options(name=f"transform_{file}").submit(
             df, file, service_type
         )
-        load_to_postgres.with_options(name=f"load_{file}").submit(
+        load_to_postgres.with_options(name=f"🤖load_{file}").submit(
             df.result().head(100), table, if_exists
         )
 

@@ -10,9 +10,8 @@ setup(
     author="Prefect Community",
     author_email="hello@prefect.io",
     keywords="prefect",
-    long_description_content_type="text/markdown",
-    version="1.0",
     packages=find_packages(exclude=["tests"]),
+    version="1.0",
     python_requires=">=3.8",
     install_requires=requirements,
     classifiers=[
@@ -24,6 +23,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Topic :: Software Development :: Libraries",
     ],
 )
