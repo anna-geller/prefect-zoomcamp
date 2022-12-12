@@ -17,7 +17,7 @@ block.save("default", overwrite=True)
 gh = GitHub(
     repository="https://github.com/anna-geller/prefect-zoomcamp", reference="main"
 )
-gh.save("prefect-zoomcamp", overwrite=True)
+gh.save("zoomcamp", overwrite=True)
 
 
 postgres_block = PostgresPandas(user_name="postgres", password="postgres")
