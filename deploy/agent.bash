@@ -1,13 +1,6 @@
-# install prefect
-pip install .
+# first clone the repo to make sure you have your own
 
-# sign up for Prefect Cloud + crete workspace + generate API key, enter those in GHA Secrets and in CLI:
-prefect cloud login
-
-# Then, run:
-prefect config view --show-secrets
-# this will display the value of PREFECT_API_KEY and PREFECT_API_URL --> paste those into GHA secrets
-
+# Clone the repo from Cloud Shell
 # Create GCP account + project => here we use project named "prefect-community" - replace it with your project name
 # set default project and region:
 export CLOUDSDK_CORE_PROJECT="prefect-community"
@@ -34,7 +27,3 @@ gcloud iam service-accounts keys create prefect.json --iam-account="$GCP_SA_NAME
 
 # build and push the image to Google Artifact Registry
 gcloud artifacts repositories create $GCP_AR_REPO --repository-format=docker --location=$CLOUDSDK_COMPUTE_REGION
-
-python blocks.py  # todo adjust your block values in that file
-prefect deployment build -n default -ib cloud-run-job/default -a -sb github/zoomcamp flows/bs.py:bs
-prefect deployment build -n default -ib cloud-run-job/default -a -sb github/zoomcamp flows/healthcheck.py:healthcheck
